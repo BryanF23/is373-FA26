@@ -1,9 +1,12 @@
 import os
 
 import psycopg2
+from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
 from openai import OpenAI
 from pgvector.psycopg2 import register_vector
+
+load_dotenv()
 
 app = Flask(__name__)
 
