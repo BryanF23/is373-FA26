@@ -377,3 +377,56 @@ To stop the database, run `docker compose down`. To also delete the local databa
 - Check that the source links open the original documents.
 
 Record the actual result of each check here after running it. Do not mark a test as passed until you have run it.
+
+
+## Current local implementation and observed checks (November 14, 2026)
+
+The original scaffold and proposed plan above have since been implemented locally. This section clarifies the current status and supersedes earlier statements that the app had not been run or that no sources had been imported.
+
+### Implemented and checked locally
+
+- Flask backend and browser interface with a question endpoint.
+- PostgreSQL with pgvector running locally through Docker Compose.
+- OpenAI `text-embedding-3-small` embeddings (1536 dimensions) and `gpt-4.1-mini` answer generation.
+- Vector retrieval using pgvector cosine distance, returning up to five relevant chunks.
+- Category filters for general, Meta Quest, Arkio, and VirtualSpeech questions in the local version.
+- Six approved local guide documents were imported, producing 17 chunks:
+  - Meta Quest 3 basic use: 3 chunks.
+  - Arkio basic navigation: 2 chunks.
+  - VirtualSpeech starting a session: 2 chunks.
+  - Meta Quest 3 classroom startup: 3 chunks.
+  - Arkio Revit import and cloud sync: 4 chunks.
+  - VirtualSpeech account and VR login: 3 chunks.
+
+### Source trace: Arkio Revit import
+
+The local guide `05_arkio_revit_import_and_cloud_sync.md` was prepared from Arkio documentation and added to the approved local source manifest. The ingestion process split it into four chunks, generated embeddings, and stored them with document metadata in PostgreSQL. For an Arkio/Revit import question, the app embeds the question, retrieves relevant chunks by vector similarity, and sends the retrieved passages to the language model to generate an answer.
+
+I ran an Arkio/Revit import question locally and received a useful answer. I did not save the exact retrieved chunk IDs, similarity scores, or a complete claim-by-claim fact check. I am therefore not claiming a measured retrieval score or a fully verified answer. A stronger evaluation record should save the question, retrieved sections, answer, and source fact-check together.
+
+### Initial observed functional checks
+
+| Check | Observed result | Evidence limit |
+|---|---|---|
+| Meta Quest classroom preparation | Asked a Quest setup question locally; received a useful answer. | Exact retrieved chunk IDs and claim-by-claim source audit were not saved. |
+| Arkio Revit import | Asked how to import/open a Revit model; received a useful answer. | Exact retrieval ranking and similarity scores were not saved. |
+| VirtualSpeech login | Asked a VirtualSpeech login question locally; received a useful answer. | Exact retrieved chunk IDs and claim-by-claim source audit were not saved. |
+
+The browser questions were also reported to produce good outputs. These are initial functional checks, not a systematic evaluation. Unsupported-question abstention, citation correctness, retrieval ranking capture, and version-specific questions remain planned checks.
+
+### Hosting and resource constraints
+
+The app is a local development setup and has not been deployed publicly. It requires Docker/PostgreSQL storage, internet access to the OpenAI API, a protected API key in an environment file, and API usage budget for embeddings and answer generation. A future hosted deployment must account for persistent database storage, secrets management, network access, uptime, and recurring compute/database costs. Hosting is not required for this Plan review.
+
+### Current repository limitation
+
+The local tested project and GitHub files are not fully synchronized. The local version has the six-document source manifest, category filtering, and initial local tests described above. The GitHub scaffold and manifest may still show the earlier placeholder example. I have not overwritten the GitHub app code or manifest in this documentation update. Before Build evidence is submitted, synchronize the tested local files, source manifest, and approved guides with GitHub and verify the committed version.
+
+### Next steps
+
+1. Save full test records with the question, retrieved source sections, answer, and fact-check.
+2. Run an unsupported-question test and record whether the app abstains appropriately.
+3. Test category filters and version-specific questions with expected sources.
+4. Synchronize the tested local app, source manifest, and approved guide files with GitHub.
+5. Keep the app local for Plan; decide on hosting during Build.
+6. Ask a peer to review the source trace and evaluation plan, then record feedback and any changes.
