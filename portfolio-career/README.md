@@ -128,6 +128,38 @@ I have useful experience in HCI, XR support, technical documentation, and deploy
 
 I need to turn these into case studies with a clear problem, my role, the process, the result, and evidence. I should be accurate about what each project demonstrates and not claim results that I did not test or document.
 
+## Career direction comparison: FDE vs. Applied AI
+
+I compared FDE with Applied AI / AI Solutions Engineering. These directions overlap, but the main focus is different.
+
+| Area | Forward Deployed Engineer | Applied AI / AI Solutions Engineer |
+|---|---|---|
+| Main focus | Work directly with a customer to understand a workflow, build an end-to-end solution, and help move it into production. | Help teams design and build AI-powered products, choose implementation patterns, and evaluate how well the AI system works. |
+| Typical work | Discovery, technical scoping, coding, integration, deployment, user adoption, and feedback to product teams. | Architecture advice, prototypes, API integration, prompt and agent development, evaluation, workshops, and technical guidance. |
+| User/customer contact | Usually embedded closely with customer teams during delivery. | Also customer-facing, but often focused on technical advising and helping customer engineering teams make good implementation decisions. |
+| Evidence my portfolio should show | Understanding a real workflow, building a working solution, integrating it, testing it, and explaining the outcome. | Building an AI application, explaining model/data choices, evaluating outputs, and documenting implementation decisions. |
+| My current fit | Strong connection to XR Lab support, HCI, demos, troubleshooting, documentation, and deployment experience. | Strong connection to my RAG project, AI research, programming coursework, and interest in building useful AI applications. |
+
+For an example of the Applied AI direction, I also reviewed [Anthropic — Applied AI Engineer, Enterprise](https://job-boards.greenhouse.io/anthropic/jobs/5057647008). That posting focuses on advising enterprise customers on Claude API architecture, developing pilots and evaluation suites, leading technical workshops and code reviews, and documenting reusable LLM techniques. It asks for 4+ years of relevant technical experience and production LLM experience. This is a useful comparison source, but it is an additional example and does not replace the three FDE employer postings above.
+
+**Decision:** I am keeping FDE as my main target direction because it combines the parts of work I am most interested in: understanding people’s problems, building technical solutions, and helping those solutions work in real environments. Applied AI remains a related direction, and the RAG project gives me a way to build evidence for that area too.
+
+## Portfolio evidence plan and observable checks
+
+These are planned checks for the portfolio, not completed results. I will record the actual outcome after I run each check.
+
+| Check | How I will check it | Evidence to save | Status |
+|---|---|---|---|
+| Target reader can identify my direction | Ask a peer to look at the homepage for about 30 seconds and explain what role I am targeting and what kind of work I can do. | Their response and any change I make to the headline or intro. | Not yet done |
+| Project evidence supports the message | Ask a peer whether the featured XR Lab, self-hosted app, and RAG work actually support the FDE direction, using the employer posting responsibilities as the comparison. | Peer feedback, selected evidence, and a note explaining what I changed or kept. | Not yet done |
+| A project case study is understandable | Have a reader follow one case study and identify the problem, my role, process, result, and evidence without extra explanation from me. | Case-study link, reader comments, and revisions. | Not yet done |
+| Navigation makes important evidence easy to find | Ask a reader to locate one technical project and its code or test evidence from the homepage. | Short task result and any navigation changes. | Not yet done |
+| Layout works on desktop and mobile | Open the portfolio at desktop and mobile widths and check that project cards, text, and navigation remain readable and usable. | Screenshots and any fixes. | Planned |
+
+### Peer review and revision record
+
+Peer review has not been completed yet, so I am not claiming feedback or a revision that has not happened. The main question for the peer review will be: **Does the target reader and the featured evidence follow clearly from the original employer postings?** After the review, I will record the feedback, decide what to change, make the change, and check the revised page again.
+
 ## Planned portfolio pages
 
 1. **Home:** Short introduction, target role, selected projects, and links to contact or professional profiles.
