@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XR Lab Knowledge Assistant</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 850px; margin: 48px auto; padding: 0 20px; color: #202124; }
+    h1 { margin-bottom: 8px; }
+    p { line-height: 1.5; color: #555; }
+    textarea { width: 100%; min-height: 110px; padding: 12px; box-sizing: border-box; font: inherit; }
+    button { margin-top: 12px; padding: 11px 18px; border: 0; border-radius: 6px; background: #c62828; color: white; font-size: 15px; cursor: pointer; }
+    button:disabled { opacity: .6; cursor: wait; }
+    #answer { white-space: pre-wrap; line-height: 1.6; margin-top: 24px; }
+    .source { border-left: 3px solid #ccc; padding: 8px 12px; margin: 10px 0; }
+    .muted { color: #777; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>XR Lab Knowledge Assistant</h1>
+  <p>Ask a question about approved XR Lab guides, headsets, or applications. Answers should be based on the documents added to the knowledge base.</p>
+  <form id="question-form">
+    <label for="question"><strong>Your question</strong></label>
+    <textarea id="question" placeholder="Example: How do I navigate a model in Arkio?" required></textarea>
+    <button id="submit" type="submit">Ask question</button>
+  </form>
+  <div id="answer" aria-live="polite"></div>
+  <div id="sources"></div>
+  <script>
+    const form = document.getElementById("question-form");
+    const button = document.getElementById("submit");
+    const answer = document.getElementById("answer");
+    const sources = document.getElementById("sources");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      answer.textContent = "Searching the knowledge base...";
+      sources.replaceChildren();
+      try {
+        const response = await fetch("/api/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: document.getElementById("question").value })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "The request failed.");
+        answer.textContent = data.answer || "";
+        if (data.sources && data.sources.length) {
+          const heading = document.createElement("h2");
+          heading.textContent = "Sources";
+          sources.appendChild(heading);
+          data.sources.forEach((source) => {
+            const item = document.createElement("div");
+            item.className = "source";
+            const title = document.createElement("strong");
+            title.textContent = source.title;
+            item.appendChild(title);
+            const section = document.createElement("div");
+            section.textContent = source.section;
+            item.appendChild(section);
+            if (source.url) {
+              const link = document.createElement("a");
+              link.href = source.url;
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+              link.textContent = "Open source";
+              item.appendChild(link);
+            }
+            const score = document.createElement("div");
+            score.className = "muted";
+            score.textContent = "Similarity: " + source.similarity;
+            item.appendChild(score);
+            sources.appendChild(item);
+          });
+        }
+      } catch (error) {
+        answer.textContent = "Error: " + error.message;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
