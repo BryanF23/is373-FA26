@@ -190,6 +190,7 @@ Peer review has not been completed yet, so I am not claiming feedback or a revis
 - [OpenAI — Forward Deployed Engineer (FDE), NYC](https://openai.com/careers/forward-deployed-engineer-%28fde%29-nyc-new-york-city/)
 - [Anthropic — Forward Deployed Engineer](https://job-boards.greenhouse.io/anthropic/jobs/5302966008-4)
 - [Palantir — Forward Deployed AI Engineer](https://jobs.lever.co/palantir/636fc05c-d348-4a06-be51-597cb9e07488/)
+- [Anthropic — Applied AI Engineer, Enterprise](https://job-boards.greenhouse.io/anthropic/jobs/5057647008) — additional posting used to compare the adjacent Applied AI direction.
 - [IS373 Project 1 brief](https://njit.instructure.com/courses/70733/pages/project-1-individual-portfolio-and-career-research)
 - [IS373 research review index](https://kaw393939.github.io/is373-studio/templates/project-record.html#research-review-index)
 
