@@ -1,0 +1,10 @@
+[
+  {
+    "filename": "example-guide.pdf",
+    "title": "Example guide title",
+    "source_url": "https://example.com/guide",
+    "publisher": "Publisher name",
+    "version_label": "Version or date, if known",
+    "approved": false
+  }
+]
