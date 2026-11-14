@@ -2,26 +2,117 @@
 
 ## Purpose and intended reader
 
-I want to build a portfolio that shows the kind of work I can do in human-computer interaction, XR, and applied AI. The main reader is a recruiter or hiring manager looking for someone who can work with users, understand a problem, build or prototype a solution, and explain technical decisions.
+I want to build a portfolio that shows the kind of work I can do in human-computer interaction, XR, and applied AI. The main reader is a recruiter or hiring manager looking for someone who can understand a user's problem, build or prototype a technical solution, and explain how it works.
 
-My current career direction is **Forward Deployed Engineer (FDE)**, with **Applied AI / AI Solutions Engineer** as a related direction to keep exploring.
+My current career direction is **Forward Deployed Engineer (FDE)**, with **Applied AI / AI Solutions Engineer** as a related direction to keep exploring. I am interested in FDE work because it combines software development with working directly with people and solving real problems.
 
 ## Employer posting research
 
-These are the three original employer postings I selected to compare. I will re-check that each posting is still active and save the exact responsibilities and qualifications I use in the final comparison.
+I reviewed three employer postings for this comparison. The summaries below are based on the responsibilities and qualifications listed in the postings when I checked them on **November 14, 2026**. Job postings can change, so I will check them again before using them in a final job application.
 
 1. [OpenAI — Forward Deployed Engineer (FDE), New York City](https://openai.com/careers/forward-deployed-engineer-%28fde%29-nyc-new-york-city/)
 2. [Anthropic — Forward Deployed Engineer](https://job-boards.greenhouse.io/anthropic/jobs/5302966008-4)
 3. [Palantir — Forward Deployed AI Engineer](https://jobs.lever.co/palantir/636fc05c-d348-4a06-be51-597cb9e07488/)
 
-### Career direction comparison
+### OpenAI — Forward Deployed Engineer (FDE)
+
+**Main responsibilities**
+- Lead deployments of AI models from discovery and technical scoping through system design, development, and production rollout.
+- Work directly with customer engineering and domain teams to understand their needs and guide adoption.
+- Build full-stack systems and contribute code when needed.
+- Make decisions about scope, speed, and quality, and remove delivery blockers.
+- Share feedback from real deployments with Product and Research teams.
+
+**Qualifications highlighted**
+- 5+ years of engineering or technical deployment experience, including customer-facing work.
+- Experience delivering complex systems in unclear or fast-changing environments.
+- Ability to write production-quality frontend and backend code using Python, JavaScript, or similar languages.
+- Experience building or deploying systems using LLMs or generative AI.
+- Strong communication and decision-making skills.
+
+**What stands out to me:** This role is not only about building an AI feature. It involves owning the process from understanding the customer's problem to getting a solution into production and making sure people use it.
+
+### Anthropic — Forward Deployed Engineer
+
+**Main responsibilities**
+- Build production applications with Claude inside customer systems.
+- Create technical deliverables such as MCP servers, sub-agents, and agent skills.
+- Support enterprise deployments and help customers use Anthropic products.
+- Identify repeatable deployment patterns and share them with Product and Engineering.
+- Build customer relationships and find additional opportunities to apply AI.
+
+**Qualifications highlighted**
+- 4+ years in a technical customer-facing role or software engineering with consulting experience.
+- Production experience with LLMs, including prompt engineering, agent development, evaluation, and deployment at scale.
+- Strong Python skills, ideally with another language such as TypeScript or Java.
+- Ability to work through ambiguity and communicate technical ideas to different audiences.
+- Enterprise IT or AI deployment experience is a plus.
+
+**What stands out to me:** Anthropic puts a lot of emphasis on hands-on AI implementation, customer support, and knowing how to take LLM applications beyond a basic prototype.
+
+### Palantir — Forward Deployed AI Engineer
+
+**Main responsibilities**
+- Work directly with customers on generative AI strategy and implementation.
+- Build end-to-end AI workflows and take them into production.
+- Work in small teams on important customer projects.
+- Understand customer needs and help decide how AI can solve their problems.
+- Bring lessons from customer deployments back into Palantir's products.
+
+**Qualifications highlighted**
+- Previous experience building solutions with LLMs and understanding the generative AI landscape.
+- Knowledge of machine learning basics, including evaluation, training, and problem decomposition.
+- Strong software engineering and programming skills; languages listed include Python, Java, C++, and TypeScript/JavaScript.
+- Ability to work with technical and non-technical people in changing environments.
+- Interest in traveling to customer sites when needed.
+
+**What stands out to me:** Palantir emphasizes building real AI workflows for customers, rather than only researching models or making academic demos. It also expects a strong foundation in software engineering and machine learning.
+
+## Comparison of the three postings
+
+| Skill or responsibility | OpenAI | Anthropic | Palantir |
+|---|---|---|---|
+| Work directly with customers | Yes | Yes | Yes |
+| Build and deploy production AI systems | Yes | Yes | Yes |
+| Strong programming skills | Python, JavaScript, or similar | Python; TypeScript or Java helpful | Python, Java, C++, TypeScript/JavaScript |
+| LLM / generative AI experience | Required experience | Production LLM experience | LLM solution experience |
+| Evaluation and testing | Eval-driven feedback and deployment outcomes | Evaluation frameworks | ML evaluation and problem decomposition |
+| Communication and collaboration | Customer and internal teams | Customer relationships and cross-team work | Technical and non-technical teams |
+| Experience level stated | 5+ years | 4+ years | Prior LLM and engineering experience; no specific years listed in the captured requirements |
+
+### Skills that appear across the postings
+
+The biggest overlap is that all three companies want engineers who can:
+1. Understand a real customer or user problem.
+2. Build software that solves that problem.
+3. Work with LLMs or generative AI.
+4. Communicate with both technical and non-technical people.
+5. Move beyond a prototype and help deliver something that works in a real environment.
+
+Evaluation is also important. The postings describe measuring results, using evaluation frameworks, or learning from deployments. This means a portfolio should show not just what I built, but how I tested it and whether it helped solve the original problem.
+
+## Career direction comparison
 
 | Direction | What the work involves | Why I am considering it |
 |---|---|---|
-| Forward Deployed Engineer | Work closely with users or customers, understand real problems, build and integrate technical solutions, and help get them working in real environments. | This combines technical work with communication, problem-solving, and understanding how people use technology. |
-| Applied AI / AI Solutions Engineer | Build AI-powered applications, connect models to data and software, test outputs, and help users apply AI to specific tasks. | This connects to my interest in AI, RAG systems, and building useful applications. |
+| Forward Deployed Engineer | Work directly with users or customers, understand their workflows, build and integrate technical solutions, and help get them working in real environments. | This combines technical work with communication, problem-solving, and understanding how people use technology. |
+| Applied AI / AI Solutions Engineer | Build AI-powered applications, connect models to data and software, evaluate outputs, and help users apply AI to specific tasks. | This connects to my interest in AI, RAG systems, and building useful applications. |
 
-**Current decision:** Focus the portfolio toward FDE roles while showing applied AI and XR projects as evidence of technical range. This is an initial direction, not a final career decision.
+**Current decision:** Focus my portfolio toward FDE roles while showing applied AI and XR projects as evidence of technical range. The postings show that FDE roles combine software engineering, AI implementation, user/customer interaction, and deployment. Applied AI is still a useful adjacent direction because it focuses more directly on building AI applications.
+
+## My current skills compared with the postings
+
+| Skill the employers want | My current evidence | What I still need to improve or demonstrate |
+|---|---|---|
+| Understanding user needs | HCI coursework and NJIT XR Lab experience helping students and faculty use XR applications. | Write a case study showing the user problem, what I learned, and how I responded. |
+| Communication with different users | Giving XR demos and explaining applications to students and faculty. | Include examples of explaining technical decisions and collecting feedback. |
+| Programming and full-stack development | Coursework and projects using Python, JavaScript, Java, Unity, and a Flask application. | Build more complete applications and show readable code, architecture, and testing. |
+| Deployment and integration | Self-hosted Flask project using Docker, PostgreSQL, Traefik, and DigitalOcean. | Document deployment steps and be clear about which security and release checks were actually demonstrated. |
+| AI and LLM development | Researching RAG systems and planning the XR Lab Knowledge Assistant. | Build an actual RAG prototype, connect a model, and evaluate its answers. |
+| Evaluation and testing | Troubleshooting XR hardware and software; coursework and deployment testing. | Create repeatable test cases with expected results and recorded evidence. |
+| Technical documentation | Creating knowledge-base articles and XR learning resources. | Publish a polished example that shows how documentation helps someone complete a task. |
+
+I have useful experience in HCI, XR support, technical documentation, and deploying a small web application. However, the postings also ask for several years of professional experience and production AI experience. I am not claiming that I meet all of those qualifications yet. I can use these roles as a direction for the skills and projects I should build while finishing my degree.
 
 ## Skills and evidence I can show
 
@@ -56,10 +147,10 @@ I need to turn these into case studies with a clear problem, my role, the proces
 
 ## Next steps
 
-- Re-open each employer posting and record the exact responsibilities and qualifications that matter.
-- Compare the postings more closely and identify repeated skills.
+- Save copies or notes of the three postings so I can refer back if a job listing changes.
 - Select the strongest project evidence for each repeated skill.
 - Draft the homepage and one complete case study.
+- Include screenshots, code links, and test evidence where appropriate.
 - Compare the portfolio against the course rubric and ask for peer feedback.
 
 ## Sources
@@ -72,6 +163,6 @@ I need to turn these into case studies with a clear problem, my role, the proces
 
 ## Checks and feedback status
 
-- **Completed for this Plan draft:** Identified three employer postings, compared two career directions at a high level, selected an initial target direction, listed portfolio evidence, and compared two page structures.
-- **Not yet completed:** Detailed posting-by-posting qualification analysis, finished portfolio pages, external review, and peer feedback.
-- **Evidence links:** The project links above are starting sources. Add links to actual portfolio pages and saved research notes as they are created.
+- **Completed for this Plan draft:** Reviewed the three employer postings, summarized their responsibilities and qualifications, compared the common skills, compared two career directions, selected an initial target direction, listed my current evidence and gaps, and compared two page structures.
+- **Not yet completed:** Finished portfolio pages, a detailed project case study with evidence, external review, and peer feedback.
+- **Evidence links:** The employer posting links above are the sources for this comparison. Add links to actual portfolio pages, project evidence, and saved research notes as they are created.
