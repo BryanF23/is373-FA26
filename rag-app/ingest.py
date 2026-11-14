@@ -10,8 +10,11 @@ from pathlib import Path
 
 import psycopg2
 from openai import OpenAI
+from dotenv import load_dotenv
 from pgvector.psycopg2 import register_vector
 from pypdf import PdfReader
+
+load_dotenv()
 
 ROOT = Path(__file__).parent
 SOURCE_DIR = ROOT / "data" / "sources"
