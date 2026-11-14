@@ -153,9 +153,141 @@ These are planned tests. They have **not** been run yet.
 - [IS373 Project 2 brief](https://njit.instructure.com/courses/70733/pages/project-2-individual-rag-app-and-technical-research)
 - [IS373 research review index](https://kaw393939.github.io/is373-studio/templates/project-record.html#research-review-index)
 
+
+
+## More detailed technical research
+
+### Chunking strategy
+
+Chunking means splitting a source document into smaller pieces before creating embeddings. The goal is to make each retrieved result focused enough to answer a question, while keeping enough surrounding context that the meaning is not lost.
+
+For this project, I plan to start with **section-aware chunking**:
+
+1. Extract text from a document and keep its headings and section order.
+2. Split by headings or logical sections first, rather than cutting every fixed number of characters.
+3. If a section is too long, split it into smaller pieces using paragraphs or sentence boundaries.
+4. Keep a small overlap between adjacent chunks only when it helps preserve a procedure or explanation that crosses a boundary.
+5. Store the original document title, section heading, source URL, page number when available, and version/date with each chunk.
+
+For example, an Arkio guide section called "Navigate a model" should stay together when possible. If it is too long, it can be split into smaller step groups while retaining the same document and section metadata.
+
+**Trade-off:** Very small chunks may lose context, while very large chunks may contain unrelated information and make retrieval less focused. Overlap can preserve context, but too much overlap creates duplicate results and increases storage and embedding work. I will start with a simple section-based approach and adjust it after testing actual questions. I have not tested chunk sizes yet.
+
+### Embeddings
+
+An embedding is a list of numbers representing information in a way that allows similarity comparisons. The ingestion process creates an embedding for each text chunk. When a user asks a question, the system creates an embedding for the question using the same embedding model, then searches for nearby chunk vectors.
+
+This is useful because a student might ask "How do I move around the model?" even if the guide uses wording like "Navigate the 3D scene." Semantic search can find related wording even when the exact keywords differ.
+
+Important implementation details:
+- Use the same embedding model and compatible dimensions for document chunks and questions.
+- Store the embedding model name and dimensions in configuration or metadata so a future model change is traceable.
+- If the embedding model changes, re-embed the existing chunks rather than comparing vectors from incompatible models.
+- Keep the source text and metadata; the embedding is for search and does not replace the original text.
+- Do not assume a high similarity score proves that a passage answers the question. The retrieved text still needs to be checked.
+
+I have not selected an embedding provider or generated embeddings yet. I will choose after checking course requirements, cost, and API access.
+
+### Vector search and pgvector
+
+A vector database stores numerical embeddings and retrieves items that are close to a query vector. In this project, the query vector represents the student's question and the stored vectors represent chunks from approved XR documentation.
+
+The pgvector extension lets PostgreSQL store vector values and perform similarity search. Its documentation describes distance operators and indexes, including:
+- **Cosine distance:** compares vector direction and is a common choice for text embeddings.
+- **L2 distance:** measures straight-line distance between vectors.
+- **Inner product:** another supported similarity operation.
+
+pgvector supports exact nearest-neighbor search as well as approximate indexes. Its documentation includes **HNSW** and **IVFFlat** index options. Exact search is a useful baseline for a small first corpus. Approximate indexes can make searches faster as data grows, but can trade some recall for speed and require tuning.
+
+**Plan:** Start with ordinary PostgreSQL/pgvector similarity queries and a small document set. Only add an approximate index if performance testing shows it is needed. I should compare the quality of retrieved chunks, not choose an index only because it sounds faster.
+
+### Vector search vs. graph retrieval: example
+
+Consider the question: "Which setup guide should I follow for Arkio on Quest 3, and does it apply to the version installed in the lab?"
+
+- **Vector search** can retrieve passages that discuss Arkio setup, Quest 3, and version details.
+- **Graph retrieval** can represent explicit links such as Arkio — runs on — Quest 3, a setup guide — applies to — Arkio version, and a document — describes — a procedure.
+- **Hybrid retrieval** can first find relevant passages by vector similarity and then follow structured relationships to gather connected facts.
+
+A graph is more useful when the question depends on relationships across multiple facts or documents. It also adds work: entities and relationships need to be extracted, checked, stored, and kept up to date. For the first version, most expected questions are about finding instructions in a document, so vector search with useful metadata is the simpler starting point. I can reconsider a graph if evaluation shows that relationship-based questions are not being answered well.
+
+### Import and document update design
+
+I will treat the document collection as a small, controlled knowledge base rather than importing everything automatically.
+
+For each source document, I plan to store:
+- A stable document ID.
+- Title and source URL or file location.
+- Publisher or owner.
+- Application/headset tags.
+- Version, publication date, or last-checked date when available.
+- Import date and content checksum or other way to detect a changed file.
+- Permission/status note showing that the source is allowed for this project.
+
+For each chunk, I plan to store:
+- Chunk ID and document ID.
+- Chunk text.
+- Section heading and page number if available.
+- Embedding and embedding model identifier.
+- Version and relevant application/headset metadata.
+
+When a source changes, I should reprocess the changed document's chunks and embeddings, not leave old and new instructions mixed together. If a source becomes outdated or is removed, the system should mark it inactive or remove its chunks from retrieval. Answers should include source title and version/date when available so users can judge whether instructions apply to their device and app version.
+
+### Retrieval and answer-generation controls
+
+The first implementation should be simple and predictable:
+
+1. Accept a question.
+2. Generate its embedding.
+3. Retrieve a small set of relevant chunks, keeping their source metadata.
+4. Optionally filter by headset, application, or version if the user specifies one.
+5. Pass the question and retrieved passages to the language model.
+6. Instruct the model to answer only from the provided passages, cite the supporting sources, and say when the sources do not contain enough information.
+7. Return the answer with clickable source references.
+
+The application should not treat retrieved documents as instructions to the model. They are reference content. The model should not follow commands that happen to appear inside a document. I will also avoid sending private or restricted lab material to an external model API.
+
+## Evaluation plan in more detail
+
+Before testing, I will create a small question set from the documents that are actually imported. Each question should have an expected source or expected answer points. This makes the tests repeatable.
+
+| Check | How I will evaluate it | Evidence to save |
+|---|---|---|
+| Retrieval relevance | Do the top retrieved chunks contain the section needed to answer the question? | Question, retrieved chunk titles/sections, and ranking |
+| Answer grounding | Can each important claim in the response be traced to a retrieved source? | Answer with source links and a short fact-check |
+| Citation correctness | Do the links point to the right document and, where possible, the right page or section? | Screenshot or saved response with citations |
+| Abstention | For an unsupported question, does the assistant clearly say the knowledge base does not provide the answer? | Unsupported test question and full response |
+| Version awareness | Does the assistant identify the relevant version/date and avoid combining conflicting instructions? | Version-specific question, sources retrieved, and response |
+
+I will keep a record of failed tests too. If retrieval selects the wrong section, I can adjust chunking, metadata filters, or retrieval settings. If the right source is retrieved but the answer is wrong, I need to examine the prompt and answer-generation step rather than assuming the database is the problem.
+
+I have not run these evaluations yet. They are planned checks for the Build and Release stages.
+
+## Technical decisions and trade-offs
+
+| Decision | Current plan | Reason | What could make me change it |
+|---|---|---|---|
+| Retrieval approach | Vector search first | Most questions should locate relevant instructions in manuals and guides. | Questions regularly require joining facts across documents. |
+| Database | PostgreSQL + pgvector | I already have experience with PostgreSQL, and pgvector keeps relational metadata and embeddings together. | Performance, hosting limits, or course constraints make another option more practical. |
+| Chunking | Section-aware chunks with limited overlap | Keeps instructions together and preserves headings. | Testing shows chunks are too broad or lose important context. |
+| Graph database | Not in the first version | Adds entity extraction and relationship maintenance before the need is proven. | Evaluation shows graph relationships would solve important unanswered questions. |
+| Model access | Consider an API-based model | More practical than hosting a large model on a small server. | Course rules, cost, privacy, or access require a different setup. |
+| Hosting | Reuse familiar Docker/Flask/PostgreSQL deployment patterns if suitable | Builds on my previous self-hosting experience. | The course environment or resource limits require a simpler deployment. |
+
+## Research sources (technical)
+
+- [pgvector — PostgreSQL vector similarity search](https://github.com/pgvector/pgvector) — vector data types, distance operators, exact search, HNSW, and IVFFlat indexes.
+- [Neo4j GraphRAG for Python documentation](https://neo4j.com/docs/neo4j-graphrag-python/current/) — graph construction and retrieval options, including vector, hybrid, and graph-aware retrievers.
+- [Neo4j GraphAcademy — Knowledge graphs and RAG](https://graphacademy.neo4j.com/knowledge-graph-rag) — explains how vector search finds relevant passages and graph traversal adds connected facts.
+- [Neo4j GraphRAG overview](https://neo4j.com/labs/genai-ecosystem/graphrag/) — describes document chunks, entity extraction, relationships, and combining vector and graph retrieval.
+- [AWS Prescriptive Guidance — Retrieval Augmented Generation options (PDF)](https://docs.aws.amazon.com/pdfs/prescriptive-guidance/latest/retrieval-augmented-generation-options/retrieval-augmented-generation-options.pdf)
+- [Apache Hop — GraphRAG guide](https://hop.apache.org/manual/latest/how-to-guides/graphrag.html)
+- [IS373 Project 2 brief](https://njit.instructure.com/courses/70733/pages/project-2-individual-rag-app-and-technical-research)
+- [IS373 research review index](https://kaw393939.github.io/is373-studio/templates/project-record.html#research-review-index)
+
 ## Checks and feedback status
 
-- **Completed for this Plan draft:** Identified the intended users and problem, listed candidate source types, reviewed vector and graph approaches, selected a vector-first direction, compared pgvector and Neo4j documentation, and outlined architecture and evaluation stories.
+- **Completed for this Plan draft:** Identified the intended users and problem, listed candidate source types, reviewed vector and graph approaches, selected a vector-first direction, compared pgvector and Neo4j documentation, and outlined chunking, embeddings, import metadata, retrieval controls, architecture, and evaluation stories.
 - **Not yet completed:** Installing pgvector, importing documents, generating embeddings, implementing retrieval, connecting a language model, hosting the app, and running the five tests.
 - **Peer feedback:** Not added yet. I will record feedback and any changes after receiving a review.
 - **Evidence links:** The documentation links above support the initial research. Add links to implementation commits, test results, and a hosted demo during the Build and Release stages.
