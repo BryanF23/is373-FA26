@@ -291,3 +291,89 @@ I have not run these evaluations yet. They are planned checks for the Build and 
 - **Not yet completed:** Installing pgvector, importing documents, generating embeddings, implementing retrieval, connecting a language model, hosting the app, and running the five tests.
 - **Peer feedback:** Not added yet. I will record feedback and any changes after receiving a review.
 - **Evidence links:** The documentation links above support the initial research. Add links to implementation commits, test results, and a hosted demo during the Build and Release stages.
+
+
+## First implementation scaffold
+
+I added an initial code scaffold for the first version. It is a starting point, not a finished or tested app.
+
+Files added:
+- `app.py` — Flask web app with a health route and a question endpoint. It embeds the question, retrieves the closest chunks from pgvector, sends the retrieved passages to the model, and returns the answer with source links.
+- `ingest.py` — imports approved text, Markdown, and PDF files, splits them into chunks, creates embeddings, and saves them in PostgreSQL.
+- `schema.sql` — creates the documents and chunks tables using pgvector.
+- `docker-compose.yml` — starts a local PostgreSQL database with pgvector.
+- `templates/index.html` — simple question-and-answer page.
+- `.env.example` — environment variable template.
+- `data/sources.json` — example source manifest. The example is deliberately marked `approved: false`.
+
+### Run it locally
+
+You need Python, Docker Desktop, and an OpenAI API key. Do not put the real key in GitHub.
+
+1. Clone the repository and open the `rag-app` folder.
+2. Create a virtual environment and install dependencies:
+
+   ```bash
+   python -m venv .venv
+   ```
+
+   On Windows PowerShell:
+
+   ```powershell
+   .venv\\Scripts\\Activate.ps1
+   pip install -r requirements.txt
+   Copy-Item .env.example .env
+   ```
+
+   On macOS/Linux:
+
+   ```bash
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   cp .env.example .env
+   ```
+
+3. Open `.env` and add your API key to `OPENAI_API_KEY`. Keep the other defaults for the first local run.
+4. Start the database:
+
+   ```bash
+   docker compose up -d
+   ```
+
+   The database is available locally on port `5433`. The schema is created automatically the first time the database volume is initialized.
+
+5. Add source files you are allowed to use to `data/sources/`. Update `data/sources.json` with the exact filename, title, source URL, publisher, version/date, and set `approved` to `true` only after confirming you have permission to use that source. Do not add private NJIT material unless you have permission.
+6. Import the approved sources:
+
+   ```bash
+   python ingest.py
+   ```
+
+7. Start the Flask app:
+
+   ```bash
+   python app.py
+   ```
+
+8. Open `http://127.0.0.1:5000` in your browser. The health check is at `http://127.0.0.1:5000/health`.
+
+To stop the database, run `docker compose down`. To also delete the local database volume and its data, run `docker compose down -v`.
+
+### Important current limits
+
+- The app has not been run or tested in your local environment yet. The code being in GitHub does not mean the app is working.
+- The sample source manifest is not an actual source and is not approved. You need to add a real guide/manual you are allowed to use before ingestion can create searchable chunks.
+- The first version uses a simple paragraph-based chunker. It does not yet preserve PDF page numbers or extract headings reliably.
+- The answer endpoint currently shows the retrieved source title, URL, and similarity score. It does not yet provide precise page-level citations.
+- The local database password in the Compose file is for local development only. Do not reuse it for a public deployment.
+- The first schema uses 1536-dimensional embeddings. If you change embedding models or dimensions, update the schema and configuration together and re-ingest the documents.
+- The app uses an API for embeddings and answer generation, so API access and usage costs may apply.
+
+### First checks to run
+
+- Visit `/health` and confirm it returns `{"status":"ok","service":"xr-lab-rag"}`.
+- Ask a question after importing one approved source and check that the returned source is relevant.
+- Ask a question that is not covered by the imported source and check whether the answer admits the knowledge base does not contain the information.
+- Check that the source links open the original documents.
+
+Record the actual result of each check here after running it. Do not mark a test as passed until you have run it.
