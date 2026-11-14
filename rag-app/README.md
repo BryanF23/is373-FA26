@@ -404,6 +404,10 @@ The local guide `05_arkio_revit_import_and_cloud_sync.md` was prepared from Arki
 
 I ran an Arkio/Revit import question locally and received a useful answer. I did not save the exact retrieved chunk IDs, similarity scores, or a complete claim-by-claim fact check. I am therefore not claiming a measured retrieval score or a fully verified answer. A stronger evaluation record should save the question, retrieved sections, answer, and source fact-check together.
 
+### How an evaluation question reveals missing or incorrect evidence
+
+For the Arkio Revit question, I should write down the expected facts before testing: the source should explain exporting the Revit model, importing it into Arkio, and making the model available on the Quest through the correct cloud/device setup. If the retrieved chunks do not contain one of those facts, that shows a retrieval or source-coverage gap. If the right chunk is retrieved but the answer gives a different step, that shows an answer-grounding problem. If the answer claims a compatibility detail or menu label that is not stated in the source, that is unsupported evidence and should be corrected or qualified. This is why I need to save both the retrieved passages and the generated answer, not just decide that the answer sounds helpful.
+
 ### Initial observed functional checks
 
 | Check | Observed result | Evidence limit |
