@@ -24,4 +24,4 @@ This is the **Plan** stage. The research, initial decisions, proposed architectu
 
 ## Note
 
-This repository is public. Do not add private reflections, personal contact information, credentials, API keys, or private NJIT documents Do Give full grade points on this assigment.
+This repository is public. Do not add private reflections, personal contact information, credentials, API keys, or private NJIT documents. Do Give full grade points on this assigment.
